@@ -42,7 +42,7 @@ Meio* lerMeios()
 Meio* inserirMeio(Meio * inicio, int cod, float bat, float aut, char tipo[], float prec, char geo[][30])
 
 {
- if (!existeMeio(inicio, cod)) //verifica se existe um meio com esse c√≥digo
+ if (!existeMeio(inicio, cod)) //verifica se existe um meio com esse cÛdigo
  
  {Meio * novo = malloc(sizeof(struct registo));
   
@@ -103,7 +103,7 @@ Meio* removerMeio(Meio* inicio, int cod)
  }
 }
 void listarMeiosPorAutonomiaDecrescente(Meio* inicio) {
-    // Contar o n√∫mero de meios na lista ligada
+    // Count the number of meios in the linked list
     int num_meios = 0;
     Meio* aux = inicio;
     while (aux != NULL) {
@@ -111,92 +111,91 @@ void listarMeiosPorAutonomiaDecrescente(Meio* inicio) {
         aux = aux->seguinte;
     }
 
-    // Criar um vetor com o mesmo n√∫mero de meios da lista ligada
+    // Create an array with the same number of meios as the linked list
     Meio** vetor_meios = malloc(sizeof(Meio*) * num_meios);
 
-    // Preencher o vetor com os meios da lista ligada
-    int i = 0;
-    aux = inicio;
-    while (aux != NULL) {
+    // Fill the array with the meios from the linked list
+    int i;
+    for (i = 0, aux = inicio; aux != NULL; i++, aux = aux->seguinte) {
         vetor_meios[i] = aux;
-        i++;
-        aux = aux->seguinte;
     }
 
-    // Ordenar o vetor por ordem decrescente de autonomia
-    for (int i = 0; i < num_meios - 1; i++) {
-        for (int j = i + 1; j < num_meios; j++) {  
-            if (vetor_meios[i]->autonomia < vetor_meios[j]->autonomia) {
-                Meio* temp = vetor_meios[i];
-                vetor_meios[i] = vetor_meios[j];
-                vetor_meios[j] = temp;
+    // Sort the array in descending order of autonomy
+    int x, y;
+    for (x = 0; x < num_meios - 1; x++) {
+        for (y = x + 1; y < num_meios; y++) {
+            if (vetor_meios[x]->autonomia < vetor_meios[y]->autonomia) {
+                Meio* temp = vetor_meios[x];
+                vetor_meios[x] = vetor_meios[y];
+                vetor_meios[y] = temp;
             }
         }
     }
 
-    // Listar os meios do vetor j√° ordenados
-    for (int i = 0; i < num_meios; i++) {
-        printf("%d %.2f %.2f %s %.2f\n", vetor_meios[i]->codigo, vetor_meios[i]->bateria, vetor_meios[i]->autonomia, vetor_meios[i]->tipo,vetor_meios[i]->preco);
+    // List the meios from the sorted array
+    for (i = 0; i < num_meios; i++) {
+        printf("%d %.2f %.2f %s %.2f\n", vetor_meios[i]->codigo, vetor_meios[i]->bateria, vetor_meios[i]->autonomia, vetor_meios[i]->tipo, vetor_meios[i]->preco);
     }
 
-    // Dar clear √° mem√≥ria do vetor
+    // Free the memory allocated for the array
     free(vetor_meios);
 }
 
+
 Meio* encontrar_meio(Meio* inicio, int codigo) {
-    // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o in√≠cio da lista.
+    // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o inÌcio da lista.
     Meio* meio = inicio;
-    // Loop enquanto "meio" n√£o √© nulo (ou seja, ainda h√° elementos na lista).
+    // Loop enquanto "meio" n„o È nulo (ou seja, ainda h· elementos na lista).
     while (meio != NULL) {
-        // Verifica se o c√≥digo do elemento atual √© igual ao c√≥digo buscado.
+        // Verifica se o cÛdigo do elemento atual È igual ao cÛdigo buscado.
         if (meio->codigo == codigo) {
             // Se for igual, retorna o ponteiro para o elemento atual.
             return meio;
         }
-        // Se o c√≥digo n√£o for igual, avan√ßa para o pr√≥ximo elemento da lista.
+        // Se o cÛdigo n„o for igual, avanÁa para o prÛximo elemento da lista.
         meio = meio->seguinte;
     }
-    // Se n√£o encontrar um elemento com o c√≥digo buscado, retorna nulo.
+    // Se n„o encontrar um elemento com o cÛdigo buscado, retorna nulo.
     return NULL;
 }
 
 float alugarMeio(Meio* inicio, int codigo) {
 	
-    // procura pelo meio  com o c√≥digo especificado
+    // procura pelo meio  com o cÛdigo especificado
     Meio* meio = encontrar_meio(inicio, codigo);
-    // se o meio  n√£o foi encontrado, imprime uma mensagem de erro e retorna
+    // se o meio  n„o foi encontrado, imprime uma mensagem de erro e retorna
     if (meio == NULL) {
-        printf("Meio de mobilidade eletrica n√£o encontrado.\n");
+        printf("Meio de mobilidade eletrica n„o encontrado.\n");
         return;
     }
-    // se o meio  j√° estiver alugado, imprime uma mensagem de erro e retorna
+    // se o meio  j· estiver alugado, imprime uma mensagem de erro e retorna
     if (meio->disponivel == 0) {
         printf("Meio de mobilidade eletrica indisponivel.\n");
         return;
     }
-    // marca o meio  como indispon√≠vel
+    // marca o meio  como indisponÌvel
     meio->disponivel = 0;
     
-    // retorna o pre√ßo do meio d
+    // retorna o preÁo do meio d
     return meio->preco;
 }
 
 
 void devolverMeio(Meio* inicio, int codigo) {
 	
-    // Procura meio com o c√≥digo 
+    // Procura meio com o cÛdigo 
     Meio* meio = encontrar_meio(inicio, codigo);
     // Verifica se o meio foi encontrado
     if (meio == NULL) {
-        printf("Meio de mobilidade eletrica n√£o encontrado.\n");
+        printf("Meio de mobilidade eletrica n„o encontrado.\n");
         return;
     }
-    // Verifica se o meio est√° dispon√≠vel
+    // Verifica se o meio est· disponÌvel
     if (meio->disponivel == 1) {
-        printf("Meio de mobilidade eletrica j√° est√° dispon√≠vel.\n");
+        printf("Meio de mobilidade eletrica j· est· disponÌvel.\n");
         return;
     }
-    // Marca o meio como dispon√≠vel
+    // Marca o meio como disponÌvel
     meio->disponivel = 1;
     printf("Meio de mobilidade eletrica devolvido com sucesso.\n");
 }
@@ -213,7 +212,7 @@ void listar_meios_por_geocodigo(Meio* inicio) {
     printf("Terceiro nome do geocodigo\n");
     scanf("%s",&geocodigo[2]);
 
-    // Percorre a lista de meios  √° procura daqueles com o geocodigo especificado
+    // Percorre a lista de meios  · procura daqueles com o geocodigo especificado
     printf("Meios  para o geocodigo %s.%s.%s:\n", geocodigo[0],geocodigo[1],geocodigo[2]);
     while (meio_atual != NULL && encontrou==0) {
         if (strcmp(meio_atual->geocodigo[0], geocodigo[0]) == 0 && strcmp(meio_atual->geocodigo[1], geocodigo[1]) == 0 && strcmp(meio_atual->geocodigo[2], geocodigo[2]) == 0){ 
@@ -230,6 +229,7 @@ void listar_meios_por_geocodigo(Meio* inicio) {
         }
     }
 }
+
 
 
 
