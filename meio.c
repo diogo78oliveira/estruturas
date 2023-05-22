@@ -42,7 +42,7 @@ Meio* lerMeios()
 Meio* inserirMeio(Meio * inicio, int cod, float bat, float aut, char tipo[], float prec, char geo[][30])
 
 {
- if (!existeMeio(inicio, cod)) //verifica se existe um meio com esse código
+ if (!existeMeio(inicio, cod)) //verifica se existe um meio com esse cÃ³digo
  
  {Meio * novo = malloc(sizeof(struct registo));
   
@@ -103,7 +103,7 @@ Meio* removerMeio(Meio* inicio, int cod)
  }
 }
 void listarMeiosPorAutonomiaDecrescente(Meio* inicio) {
-    // Contar o número de meios na lista ligada
+    // Contar o nÃºmero de meios na lista ligada
     int num_meios = 0;
     Meio* aux = inicio;
     while (aux != NULL) {
@@ -111,7 +111,7 @@ void listarMeiosPorAutonomiaDecrescente(Meio* inicio) {
         aux = aux->seguinte;
     }
 
-    // Criar um vetor com o mesmo número de meios da lista ligada
+    // Criar um vetor com o mesmo nÃºmero de meios da lista ligada
     Meio** vetor_meios = malloc(sizeof(Meio*) * num_meios);
 
     // Preencher o vetor com os meios da lista ligada
@@ -134,69 +134,69 @@ void listarMeiosPorAutonomiaDecrescente(Meio* inicio) {
         }
     }
 
-    // Listar os meios do vetor já ordenados
+    // Listar os meios do vetor jÃ¡ ordenados
     for (int i = 0; i < num_meios; i++) {
         printf("%d %.2f %.2f %s %.2f\n", vetor_meios[i]->codigo, vetor_meios[i]->bateria, vetor_meios[i]->autonomia, vetor_meios[i]->tipo,vetor_meios[i]->preco);
     }
 
-    // Dar clear á memória do vetor
+    // Dar clear Ã¡ memÃ³ria do vetor
     free(vetor_meios);
 }
 
 Meio* encontrar_meio(Meio* inicio, int codigo) {
-    // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o início da lista.
+    // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o inÃ­cio da lista.
     Meio* meio = inicio;
-    // Loop enquanto "meio" não é nulo (ou seja, ainda há elementos na lista).
+    // Loop enquanto "meio" nÃ£o Ã© nulo (ou seja, ainda hÃ¡ elementos na lista).
     while (meio != NULL) {
-        // Verifica se o código do elemento atual é igual ao código buscado.
+        // Verifica se o cÃ³digo do elemento atual Ã© igual ao cÃ³digo buscado.
         if (meio->codigo == codigo) {
             // Se for igual, retorna o ponteiro para o elemento atual.
             return meio;
         }
-        // Se o código não for igual, avança para o próximo elemento da lista.
+        // Se o cÃ³digo nÃ£o for igual, avanÃ§a para o prÃ³ximo elemento da lista.
         meio = meio->seguinte;
     }
-    // Se não encontrar um elemento com o código buscado, retorna nulo.
+    // Se nÃ£o encontrar um elemento com o cÃ³digo buscado, retorna nulo.
     return NULL;
 }
 
 float alugarMeio(Meio* inicio, int codigo) {
 	
-    // procura pelo meio  com o código especificado
+    // procura pelo meio  com o cÃ³digo especificado
     Meio* meio = encontrar_meio(inicio, codigo);
-    // se o meio  não foi encontrado, imprime uma mensagem de erro e retorna
+    // se o meio  nÃ£o foi encontrado, imprime uma mensagem de erro e retorna
     if (meio == NULL) {
-        printf("Meio de mobilidade eletrica não encontrado.\n");
+        printf("Meio de mobilidade eletrica nÃ£o encontrado.\n");
         return;
     }
-    // se o meio  já estiver alugado, imprime uma mensagem de erro e retorna
+    // se o meio  jÃ¡ estiver alugado, imprime uma mensagem de erro e retorna
     if (meio->disponivel == 0) {
         printf("Meio de mobilidade eletrica indisponivel.\n");
         return;
     }
-    // marca o meio  como indisponível
+    // marca o meio  como indisponÃ­vel
     meio->disponivel = 0;
     
-    // retorna o preço do meio d
+    // retorna o preÃ§o do meio d
     return meio->preco;
 }
 
 
 void devolverMeio(Meio* inicio, int codigo) {
 	
-    // Procura meio com o código 
+    // Procura meio com o cÃ³digo 
     Meio* meio = encontrar_meio(inicio, codigo);
     // Verifica se o meio foi encontrado
     if (meio == NULL) {
-        printf("Meio de mobilidade eletrica não encontrado.\n");
+        printf("Meio de mobilidade eletrica nÃ£o encontrado.\n");
         return;
     }
-    // Verifica se o meio está disponível
+    // Verifica se o meio estÃ¡ disponÃ­vel
     if (meio->disponivel == 1) {
-        printf("Meio de mobilidade eletrica já está disponível.\n");
+        printf("Meio de mobilidade eletrica jÃ¡ estÃ¡ disponÃ­vel.\n");
         return;
     }
-    // Marca o meio como disponível
+    // Marca o meio como disponÃ­vel
     meio->disponivel = 1;
     printf("Meio de mobilidade eletrica devolvido com sucesso.\n");
 }
@@ -213,7 +213,7 @@ void listar_meios_por_geocodigo(Meio* inicio) {
     printf("Terceiro nome do geocodigo\n");
     scanf("%s",&geocodigo[2]);
 
-    // Percorre a lista de meios  á procura daqueles com o geocodigo especificado
+    // Percorre a lista de meios  Ã¡ procura daqueles com o geocodigo especificado
     printf("Meios  para o geocodigo %s.%s.%s:\n", geocodigo[0],geocodigo[1],geocodigo[2]);
     while (meio_atual != NULL && encontrou==0) {
         if (strcmp(meio_atual->geocodigo[0], geocodigo[0]) == 0 && strcmp(meio_atual->geocodigo[1], geocodigo[1]) == 0 && strcmp(meio_atual->geocodigo[2], geocodigo[2]) == 0){ 
@@ -230,7 +230,6 @@ void listar_meios_por_geocodigo(Meio* inicio) {
         }
     }
 }
-
 
 
 
