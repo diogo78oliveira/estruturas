@@ -102,7 +102,7 @@ void login_cliente() {
 						listarMeios(meios);
 						break;
 					case 5:
-					    printf("Digite o código do meio de mobilidade eletrica que deseja alugar: ");
+					    printf("Digite o cï¿½digo do meio de mobilidade eletrica que deseja alugar: ");
                     	scanf("%d", &codigo);
                        	alugarMeio(meios, codigo);break;
 					case 6:
@@ -157,13 +157,14 @@ void login_gestor(){
         	printf("4 - Guardar Meios\n");
         	printf("5 - Ler Meios\n");
         	printf("6 - Listar Meios por ordem de autonomia decrescente\n");
-        	printf("7 - Listar Meios por Geocódigo\n");
+        	printf("7 - Listar Meios por Geocï¿½digo\n");
         	printf("=====================================\n");
         	printf("8 - Inserir novo Gestor\n");
         	printf("9 - Listar Gestores\n");
         	printf("10 - Remover um gestor\n");  
 			printf("11 - Alterar dados\n");
 			printf("12 - Guardar\n");
+            printf("13 - Ler gestores\n");
         	printf("0 - Sair\n");
         	
              {Meio* meios = NULL;
@@ -193,7 +194,7 @@ void login_gestor(){
 	   					scanf("%f",&aut);
 	   					printf("Tipo?\n");
 	   					scanf("%s",&tipo);
-	   					printf("Insira o preço do meio\n");
+	   					printf("Insira o preï¿½o do meio\n");
 	   					scanf("%f",&prec);
 	   					printf("Primeiro nome do geocodigo\n");
                         scanf("%s",&geo[0]);
@@ -264,7 +265,7 @@ void login_gestor(){
         }
     }
 
-    printf("Usuário ou senha inválidos!\n");
+    printf("Usuï¿½rio ou senha invï¿½lidos!\n");
     fclose(arquivo);
 }
 

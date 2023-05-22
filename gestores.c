@@ -44,7 +44,7 @@ int guardarGestores(Gestor* inicio)
 Gestor* lerGestores()
 {FILE* fp;
  int ID;
- char password[50], nome[50], morada[50];
+ char passg[50], nomeg[50], moradag[50];
  Gestor* aux=NULL;
  fp = fopen("gestoresDados.txt","r");
  if (fp!=NULL)
