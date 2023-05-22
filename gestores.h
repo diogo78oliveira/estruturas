@@ -9,9 +9,10 @@
 	} Gestor;
 
 
-	Gestor* inserirGestor(Gestor* inicio, int ID, char passg[], char nomeg[], char moradag[]); // Inserção de um novo registo
-	int existeGestor(Gestor* inicio, int ID_gestor); // Determinar existência do 'codigo' na lista ligada 'inicio'
-	Gestor* removerGestor(Gestor* inicio, int ID); // Remover um gestor a partir do seu código
+	Gestor* inserirGestor(Gestor* inicio, int ID, char passg[], char nomeg[], char moradag[]); // Inserï¿½ï¿½o de um novo registo
+	int existeGestor(Gestor* inicio, int ID_gestor); // Determinar existï¿½ncia do 'codigo' na lista ligada 'inicio'
+	Gestor* removerGestor(Gestor* inicio, int ID); // Remover um gestor a partir do seu cï¿½digo
 	void alterar_dados(Gestor* inicio);
 	Gestor* lerGestores();
+	int guardarGestores(Gestor* inicio);
 

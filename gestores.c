@@ -39,32 +39,26 @@ Gestor* lerGestores()
     }
     return (aux);
 }
-// Inserçao de um novo gestor
-Gestor* inserirGestor(Gestor* inicio, int ID, char passg[], char nomeg[], char moradag[]) {
-    if (!existeGestor(inicio, ID)) {
-        Gestor* novo = malloc(sizeof(struct registoGestores));
-        if (novo != NULL) {
-        	novo->ID_gestor = ID;
-            strcpy(novo->password, passg);
-            strcpy(novo->nome, nomeg);
-            strcpy(novo->morada, moradag);
-            novo->seguinte = inicio;
+// Inserï¿½ao de um novo gestor
+Gestor* inserirGestor(Gestor * inicio, int ID, char passg[], char nomeg[], char moradag[])
 
-            FILE* fp;
-            fp = fopen("gestoresDados.txt", "a");
-            if (fp != NULL) {
-                fprintf(fp, "%d;%s;%s;%s\n",novo->ID_gestor, novo->password, novo->nome, novo->morada);
-                fclose(fp);
-            } else {
-                printf("Erro\n");
-            }
-
-            return novo;
-        }
-    } else {
-        return inicio;
-    }
+{
+ if (!existeGestor(inicio, ID)) //verifica se existe um meio com esse cï¿½digo
+ 
+ {Gestor * novo = malloc(sizeof(struct registoGestores));
+  
+  if (novo != NULL)
+  {novo->ID_gestor = ID;				//copiar strings para o novo meio
+   strcpy(novo->password,passg);
+   strcpy(novo->nome,nomeg);
+   strcpy(novo->morada,moradag);
+   novo->seguinte = inicio;
+   return(novo); //retorna o novo meio
+  }
+ } else return(inicio);
 }
+
+
 // listar na consola o conteudo da lista ligada
 void listarGestores(Gestor* inicio)
 	{while (inicio != NULL)
@@ -155,7 +149,7 @@ void alterar_dados(Gestor* inicio) {
 						
             if (strlen(novaPassg) > 0) {
                 strcpy(passg, novaPassg);
-                memset(novaPassg, 0, sizeof(novaPassg)); // apaga a nova pass da memória
+                memset(novaPassg, 0, sizeof(novaPassg)); // apaga a nova pass da memï¿½ria
             }
             if (strlen(novoNomeg) > 0) {
                 strcpy(nomeg, novoNomeg);
