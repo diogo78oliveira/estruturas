@@ -21,25 +21,6 @@ int guardarGestores(Gestor* inicio)
  else return(0);
 }
 
-/*Gestor* lerGestores()
-{FILE* fp;
-	int ID;
-    char passg[50], nomeg[50], moradag[50];
-
- 	Gestor* aux=NULL;
-
-    fp = fopen("gestoresDados.txt","r");
-    if (fp != NULL)
-    {
-        while (!feof(fp))
-		{fscanf(fp, "%d;%s;%s;%s", &ID, &passg, &nomeg, &moradag);
-            aux = inserirGestor(aux, ID, passg, nomeg, moradag);
-        }
-        fclose(fp);
-    }
-    return (aux);
-}
-*/
 
 Gestor* lerGestores()
 {FILE* fp;
@@ -80,7 +61,7 @@ Gestor* inserirGestor(Gestor * inicio, int ID, char passg[], char nomeg[], char 
 // listar na consola o conteudo da lista ligada
 void listarGestores(Gestor* inicio)
 	{while (inicio != NULL)
- {printf("%d  %s %s %s\n",inicio->ID_gestor,inicio->password, 
+ {printf("%d %s %s %s\n",inicio->ID_gestor,inicio->password, 
 		             inicio->nome, inicio->morada);
   inicio = inicio->seguinte;
  }
@@ -96,11 +77,35 @@ int existeGestor(Gestor* inicio, int ID)
  return(0);
 }
 
-Gestor* removerGestor(Gestor* inicio, int ID) 
+/*Gestor* removerGestor(Gestor* inicio, int ID) 
 { Gestor *anterior=inicio, *atual=inicio, *aux;
 
  if (atual==NULL) return(NULL);
  else if (atual->ID_gestor == ID) // remo??o do 1? registo
+ {aux = atual->seguinte;
+  free(atual);
+  return(aux);
+ }
+ else
+ {while ((atual!=NULL)&&(atual->ID_gestor!=ID)) 
+  {anterior = atual;
+   atual = atual->seguinte;
+  }
+  if (atual==NULL) return(inicio);
+  else
+  {anterior->seguinte = atual->seguinte;
+   free(atual);
+   return(inicio);
+  }
+ }
+}
+ */
+
+ Gestor* removerGestor(Gestor* inicio, int ID) 
+{ Gestor *anterior=inicio, *atual=inicio, *aux;
+
+ if (atual==NULL) return(NULL);
+ else if (atual->codigo == ID) 
  {aux = atual->seguinte;
   free(atual);
   return(aux);
