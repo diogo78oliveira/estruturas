@@ -79,26 +79,32 @@ int existeGestor(Gestor* inicio, int ID)
 
 
 Gestor* removerGestor(Gestor* inicio, int ID) 
-{ Gestor *anterior=inicio, *atual=inicio, *aux;
+{
+    Gestor *anterior = NULL;
+    Gestor *atual = inicio;
 
- if (atual==NULL) return(NULL);
- else if (atual->ID_gestor == ID) // remo??o do 1? registo
- {aux = atual->seguinte;
-  free(atual);
-  return(aux);
- }
- else
- {while ((atual!=NULL)&&(atual->ID_gestor!=ID)) 
-  {anterior = atual;
-   atual = atual->seguinte;
-  }
-  if (atual==NULL) return(inicio);
-  else
-  {anterior->seguinte = atual->seguinte;
-   free(atual);
-   return(inicio);
-  }
- }
+    if (atual == NULL) {
+        return NULL;
+    }
+    else if (atual->ID_gestor == ID) {
+        inicio = atual->seguinte;
+        free(atual);
+        return inicio;
+    }
+    else {
+        while (atual != NULL && atual->ID_gestor != ID) {
+            anterior = atual;
+            atual = atual->seguinte;
+        }
+        if (atual == NULL) {
+            return inicio;
+        }
+        else {
+            anterior->seguinte = atual->seguinte;
+            free(atual);
+            return inicio;
+        }
+    }
 }
 
 

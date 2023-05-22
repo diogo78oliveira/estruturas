@@ -80,7 +80,6 @@ int existeMeio(Meio* inicio, int cod)
   }
  return(0);
 }
-
 Meio* removerMeio(Meio* inicio, int cod) 
 { Meio *anterior=inicio, *atual=inicio, *aux;
 
