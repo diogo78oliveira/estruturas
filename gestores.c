@@ -21,7 +21,7 @@ int guardarGestores(Gestor* inicio)
  else return(0);
 }
 
-Gestor* lerGestores()
+/*Gestor* lerGestores()
 {FILE* fp;
 	int ID;
     char passg[50], nomeg[50], moradag[50];
@@ -39,6 +39,24 @@ Gestor* lerGestores()
     }
     return (aux);
 }
+*/
+
+Gestor* lerGestores()
+{FILE* fp;
+ int ID;
+ char password[50], nome[50], morada[50];
+ Gestor* aux=NULL;
+ fp = fopen("gestoresDados.txt","r");
+ if (fp!=NULL)
+ {while (!feof(fp))
+  { fscanf(fp,"%d;%s;%s;%s\n", &ID, &passg, &nomeg, &moradag);
+    aux = inserirGestor(aux, ID, passg, nomeg, moradag);
+  }
+  fclose(fp);
+ }
+ return(aux);
+}
+
 // Inser�ao de um novo gestor
 Gestor* inserirGestor(Gestor * inicio, int ID, char passg[], char nomeg[], char moradag[])
 
