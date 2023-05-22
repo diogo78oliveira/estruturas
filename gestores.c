@@ -78,17 +78,17 @@ int existeGestor(Gestor* inicio, int ID)
 }
 
 
-Gestor* removerGestor(Gestor* inicio, int ID) 
-{ Gestor *anterior=inicio, *atual=inicio, *aux;
+Gestor* removerMeio(Meio* inicio, int cod) 
+{ Meio *anterior=inicio, *atual=inicio, *aux;
 
  if (atual==NULL) return(NULL);
- else if (atual->ID_gestor == ID) // remo??o do 1? registo
+ else if (atual->codigo == cod) // remo??o do 1? registo
  {aux = atual->seguinte;
   free(atual);
   return(aux);
  }
  else
- {while ((atual!=NULL)&&(atual->ID_gestor!=ID)) 
+ {while ((atual!=NULL)&&(atual->codigo!=cod)) 
   {anterior = atual;
    atual = atual->seguinte;
   }
