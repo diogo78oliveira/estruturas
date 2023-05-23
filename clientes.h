@@ -20,5 +20,6 @@
 	Cliente* lerClientes();
 	int guardarClientes(Cliente* inicio);
 	void adicionarSaldo(Cliente* inicio);
+	Cliente* encontrar_cliente(Cliente* inicio, int NIFc);
 
 

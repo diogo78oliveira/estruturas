@@ -48,6 +48,24 @@ int existeCliente(Cliente* inicio, int NIFc)
  return(0);
 }
 
+Cliente* encontrar_cliente(Cliente* inicio, int NIFc) {
+    // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o inï¿½cio da lista.
+    Cliente* cliente = inicio;
+    // Loop enquanto "meio" nï¿½o ï¿½ nulo (ou seja, ainda hï¿½ elementos na lista).
+    while (cliente != NULL) {
+        // Verifica se o cï¿½digo do elemento atual ï¿½ igual ao cï¿½digo buscado.
+        if (cliente->NIF_cliente == NIFc) {
+            // Se for igual, retorna o ponteiro para o elemento atual.
+            return cliente;
+        }
+        // Se o cï¿½digo nï¿½o for igual, avanï¿½a para o prï¿½ximo elemento da lista.
+        cliente = cliente->seguinte;
+    }
+    // Se nï¿½o encontrar um elemento com o cï¿½digo buscado, retorna nulo.
+    return NULL;
+
+    
+}
 void consultarSaldo(Cliente * inicio)
 {	
 	int NIFc;
@@ -111,7 +129,7 @@ void adicionarSaldo(Cliente * inicio) {
         char *token = strtok(linha, ";");
         if (atoi(token) == NIFc) {
             encontrado = 1;
-            // lê o saldo atual e atualiza no arquivo
+            // lï¿½ o saldo atual e atualiza no arquivo
             token = strtok(NULL, ";"); //ignora NIF
             token = strtok(NULL, ";"); // ignora  senha
             token = strtok(NULL, ";"); // ignora  nome
@@ -120,7 +138,7 @@ void adicionarSaldo(Cliente * inicio) {
             float saldoc = atof(token);
             printf("Saldo atual: %.2f\n", saldoc);
 
-            // pede ao usuário o valor a ser adicionado
+            // pede ao usuï¿½rio o valor a ser adicionado
             float novoSaldo;
             printf("Insira quanto saldo quer inserir : ");
             scanf("%f", &novoSaldo);
