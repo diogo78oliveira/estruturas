@@ -48,6 +48,7 @@ int existeCliente(Cliente* inicio, int NIFc)
  return(0);
 }
 
+<<<<<<< HEAD
 Cliente* encontrar_cliente(Cliente* inicio, int NIFc) {
     // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o inï¿½cio da lista.
     Cliente* cliente = inicio;
@@ -67,6 +68,8 @@ Cliente* encontrar_cliente(Cliente* inicio, int NIFc) {
 
 }
 
+=======
+>>>>>>> parent of ac16e1a (dsadsa)
 void consultarSaldo(Cliente * inicio)
 {	
 	int NIFc;
@@ -120,6 +123,7 @@ void adicionarSaldo(Cliente *inicio, int NIFc) {
         return;
     }
 
+<<<<<<< HEAD
     // Encontra o cliente com o NIF informado
     Cliente* cliente = encontrar_cliente(inicio, NIFc);
     if (cliente != NULL) {
@@ -130,6 +134,30 @@ void adicionarSaldo(Cliente *inicio, int NIFc) {
         float novoSaldo;
         printf("Insira quanto saldo quer inserir : ");
         scanf("%f", &novoSaldo);
+=======
+    // procura o cliente com o NIF informado no arquivo
+    printf("Insira o seu NIF : ");
+    scanf("%d", &NIFc);
+    int encontrado = 0;
+    char linha[100];
+    while (fgets(linha, 100, arquivo) != NULL) {
+        char *token = strtok(linha, ";");
+        if (atoi(token) == NIFc) {
+            encontrado = 1;
+            // lê o saldo atual e atualiza no arquivo
+            token = strtok(NULL, ";"); //ignora NIF
+            token = strtok(NULL, ";"); // ignora  senha
+            token = strtok(NULL, ";"); // ignora  nome
+            token = strtok(NULL, ";"); // ignora  morada
+            token = strtok(NULL, ";"); // ignora email
+            float saldoc = atof(token);
+            printf("Saldo atual: %.2f\n", saldoc);
+
+            // pede ao usuário o valor a ser adicionado
+            float novoSaldo;
+            printf("Insira quanto saldo quer inserir : ");
+            scanf("%f", &novoSaldo);
+>>>>>>> parent of ac16e1a (dsadsa)
 
         // Atualiza o saldo do cliente
         cliente->saldo_cliente += novoSaldo;

@@ -42,7 +42,7 @@ Meio* lerMeios()
 Meio* inserirMeio(Meio * inicio, int cod, float bat, float aut, char tipo[], float prec, char geo[][30])
 
 {
- if (!existeMeio(inicio, cod)) //verifica se existe um meio com esse cï¿½digo
+ if (!existeMeio(inicio, cod)) //verifica se existe um meio com esse código
  
  {Meio * novo = malloc(sizeof(struct registo));
   
@@ -143,59 +143,59 @@ void listarMeiosPorAutonomiaDecrescente(Meio* inicio) {
 
 
 Meio* encontrar_meio(Meio* inicio, int codigo) {
-    // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o inï¿½cio da lista.
+    // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o início da lista.
     Meio* meio = inicio;
-    // Loop enquanto "meio" nï¿½o ï¿½ nulo (ou seja, ainda hï¿½ elementos na lista).
+    // Loop enquanto "meio" não é nulo (ou seja, ainda há elementos na lista).
     while (meio != NULL) {
-        // Verifica se o cï¿½digo do elemento atual ï¿½ igual ao cï¿½digo buscado.
+        // Verifica se o código do elemento atual é igual ao código buscado.
         if (meio->codigo == codigo) {
             // Se for igual, retorna o ponteiro para o elemento atual.
             return meio;
         }
-        // Se o cï¿½digo nï¿½o for igual, avanï¿½a para o prï¿½ximo elemento da lista.
+        // Se o código não for igual, avança para o próximo elemento da lista.
         meio = meio->seguinte;
     }
-    // Se nï¿½o encontrar um elemento com o cï¿½digo buscado, retorna nulo.
+    // Se não encontrar um elemento com o código buscado, retorna nulo.
     return NULL;
 }
 
 float alugarMeio(Meio* inicio, int codigo) {
 	
-    // procura pelo meio  com o cï¿½digo especificado
+    // procura pelo meio  com o código especificado
     Meio* meio = encontrar_meio(inicio, codigo);
-    // se o meio  nï¿½o foi encontrado, imprime uma mensagem de erro e retorna
+    // se o meio  não foi encontrado, imprime uma mensagem de erro e retorna
     if (meio == NULL) {
-        printf("Meio de mobilidade eletrica nï¿½o encontrado.\n");
+        printf("Meio de mobilidade eletrica não encontrado.\n");
         return;
     }
-    // se o meio  jï¿½ estiver alugado, imprime uma mensagem de erro e retorna
+    // se o meio  já estiver alugado, imprime uma mensagem de erro e retorna
     if (meio->disponivel == 0) {
         printf("Meio de mobilidade eletrica indisponivel.\n");
         return;
     }
-    // marca o meio  como indisponï¿½vel
+    // marca o meio  como indisponível
     meio->disponivel = 0;
     
-    // retorna o preï¿½o do meio d
+    // retorna o preço do meio d
     return meio->preco;
 }
 
 
 void devolverMeio(Meio* inicio, int codigo) {
 	
-    // Procura meio com o cï¿½digo 
+    // Procura meio com o código 
     Meio* meio = encontrar_meio(inicio, codigo);
     // Verifica se o meio foi encontrado
     if (meio == NULL) {
-        printf("Meio de mobilidade eletrica nï¿½o encontrado.\n");
+        printf("Meio de mobilidade eletrica não encontrado.\n");
         return;
     }
-    // Verifica se o meio estï¿½ disponï¿½vel
+    // Verifica se o meio está disponível
     if (meio->disponivel == 1) {
-        printf("Meio de mobilidade eletrica jï¿½ estï¿½ disponï¿½vel.\n");
+        printf("Meio de mobilidade eletrica já está disponível.\n");
         return;
     }
-    // Marca o meio como disponï¿½vel
+    // Marca o meio como disponível
     meio->disponivel = 1;
     printf("Meio de mobilidade eletrica devolvido com sucesso.\n");
 }
@@ -212,7 +212,7 @@ void listar_meios_por_geocodigo(Meio* inicio) {
     printf("Terceiro nome do geocodigo\n");
     scanf("%s",&geocodigo[2]);
 
-    // Percorre a lista de meios  ï¿½ procura daqueles com o geocodigo especificado
+    // Percorre a lista de meios  á procura daqueles com o geocodigo especificado
     printf("Meios  para o geocodigo %s.%s.%s:\n", geocodigo[0],geocodigo[1],geocodigo[2]);
     while (meio_atual != NULL && encontrou==0) {
         if (strcmp(meio_atual->geocodigo[0], geocodigo[0]) == 0 && strcmp(meio_atual->geocodigo[1], geocodigo[1]) == 0 && strcmp(meio_atual->geocodigo[2], geocodigo[2]) == 0){ 
