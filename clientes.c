@@ -64,8 +64,9 @@ Cliente* encontrar_cliente(Cliente* inicio, int NIFc) {
     // Se n�o encontrar um elemento com o c�digo buscado, retorna nulo.
     return NULL;
 
-    
+
 }
+
 void consultarSaldo(Cliente * inicio)
 {	
 	int NIFc;
@@ -108,8 +109,7 @@ void consultarSaldo(Cliente * inicio)
 }
 }
 					
-void adicionarSaldo(Cliente * inicio) {
-    int NIFc;
+void adicionarSaldo(Cliente *inicio, int NIFc) {
     FILE *arquivo;
 
     // abre o arquivo para leitura e escrita
@@ -120,47 +120,43 @@ void adicionarSaldo(Cliente * inicio) {
         return;
     }
 
-    // procura o cliente com o NIF informado no arquivo
-    printf("Insira o seu NIF : ");
-    scanf("%d", &NIFc);
-    int encontrado = 0;
-    char linha[100];
-    while (fgets(linha, 100, arquivo) != NULL) {
-        char *token = strtok(linha, ";");
-        if (atoi(token) == NIFc) {
-            encontrado = 1;
-            // l� o saldo atual e atualiza no arquivo
-            token = strtok(NULL, ";"); //ignora NIF
-            token = strtok(NULL, ";"); // ignora  senha
-            token = strtok(NULL, ";"); // ignora  nome
-            token = strtok(NULL, ";"); // ignora  morada
-            token = strtok(NULL, ";"); // ignora email
-            float saldoc = atof(token);
-            printf("Saldo atual: %.2f\n", saldoc);
+    // Encontra o cliente com o NIF informado
+    Cliente* cliente = encontrar_cliente(inicio, NIFc);
+    if (cliente != NULL) {
+        // Exibe o saldo atual
+        printf("Saldo atual: %.2f\n", cliente->saldo_cliente);
 
-            // pede ao usu�rio o valor a ser adicionado
-            float novoSaldo;
-            printf("Insira quanto saldo quer inserir : ");
-            scanf("%f", &novoSaldo);
+        // Solicita ao usuário o valor a ser adicionado
+        float novoSaldo;
+        printf("Insira quanto saldo quer inserir : ");
+        scanf("%f", &novoSaldo);
 
-            // atualiza o saldo no arquivo
-            saldoc += novoSaldo;
-            fseek(arquivo, -strlen(token) - 1, SEEK_CUR);
-            fprintf(arquivo, "%.2f", saldoc);
-            printf("Saldo atualizado com sucesso\n");
-            break;
+        // Atualiza o saldo do cliente
+        cliente->saldo_cliente += novoSaldo;
+
+        // Volta para o início do arquivo
+        rewind(arquivo);
+
+        // Atualiza o valor do saldo no arquivo
+        char linha[100];
+        while (fgets(linha, 100, arquivo) != NULL) {
+            char *token = strtok(linha, ";");
+            if (atoi(token) == NIFc) {
+                fseek(arquivo, -strlen(token) - 1, SEEK_CUR);
+                fprintf(arquivo, "%d;%s;%s;%s;%s;%.2f\n", cliente->NIF_cliente, cliente->password_cliente,
+                        cliente->nome_cliente, cliente->morada_cliente, cliente->email_cliente, cliente->saldo_cliente);
+                break;
+            }
         }
-    }
 
-    // verifica se o cliente foi encontrado
-    if (!encontrado) {
+        printf("Saldo atualizado com sucesso\n");
+    } else {
         printf("Cliente nao encontrado.\n");
     }
 
-
     // fecha o arquivo
     fclose(arquivo);
-} 
+}
 
 void alterarDados(Cliente *inicio) {
     int NIFc;
