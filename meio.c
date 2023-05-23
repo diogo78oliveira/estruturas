@@ -159,26 +159,7 @@ Meio* encontrar_meio(Meio* inicio, int codigo) {
     return NULL;
 }
 
-float alugarMeio(Meio* inicio, int codigo) {
-	
-    // procura pelo meio  com o código especificado
-    Meio* meio = encontrar_meio(inicio, codigo);
-    // se o meio  não foi encontrado, imprime uma mensagem de erro e retorna
-    if (meio == NULL) {
-        printf("Meio de mobilidade eletrica não encontrado.\n");
-        return;
-    }
-    // se o meio  já estiver alugado, imprime uma mensagem de erro e retorna
-    if (meio->disponivel == 0) {
-        printf("Meio de mobilidade eletrica indisponivel.\n");
-        return;
-    }
-    // marca o meio  como indisponível
-    meio->disponivel = 0;
-    
-    // retorna o preço do meio d
-    return meio->preco;
-}
+
 
 
 void devolverMeio(Meio* inicio, int codigo) {
@@ -187,18 +168,19 @@ void devolverMeio(Meio* inicio, int codigo) {
     Meio* meio = encontrar_meio(inicio, codigo);
     // Verifica se o meio foi encontrado
     if (meio == NULL) {
-        printf("Meio de mobilidade eletrica não encontrado.\n");
+        printf("Meio de mobilidade eletrica nao encontrado.\n");
         return;
     }
     // Verifica se o meio está disponível
     if (meio->disponivel == 1) {
-        printf("Meio de mobilidade eletrica já está disponível.\n");
+        printf("Meio de mobilidade eletrica ja esta disponivel.\n");
         return;
     }
     // Marca o meio como disponível
     meio->disponivel = 1;
     printf("Meio de mobilidade eletrica devolvido com sucesso.\n");
 }
+
 void listar_meios_por_geocodigo(Meio* inicio) {
     int encontrou = 0;
     char geocodigo[3][30]; 

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "clientes.h"
-
+#include "meio.h"
 // Inser??o de um novo registo
 Cliente* inserirCliente(Cliente * inicio, int NIFc, char passc[], char nomec[],char moradac[], char emailc[], float saldoc){
  if (!existeCliente(inicio, NIFc)) {
@@ -48,28 +48,26 @@ int existeCliente(Cliente* inicio, int NIFc)
  return(0);
 }
 
-<<<<<<< HEAD
+
+
 Cliente* encontrar_cliente(Cliente* inicio, int NIFc) {
-    // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o inï¿½cio da lista.
+    // Cria um ponteiro chamado "meio" e inicializa com o ponteiro para o in?cio da lista.
     Cliente* cliente = inicio;
-    // Loop enquanto "meio" nï¿½o ï¿½ nulo (ou seja, ainda hï¿½ elementos na lista).
+    // Loop enquanto "meio" n?o ? nulo (ou seja, ainda h? elementos na lista).
     while (cliente != NULL) {
-        // Verifica se o cï¿½digo do elemento atual ï¿½ igual ao cï¿½digo buscado.
+        // Verifica se o c?digo do elemento atual ? igual ao c?digo buscado.
         if (cliente->NIF_cliente == NIFc) {
             // Se for igual, retorna o ponteiro para o elemento atual.
             return cliente;
         }
-        // Se o cï¿½digo nï¿½o for igual, avanï¿½a para o prï¿½ximo elemento da lista.
+        // Se o c?digo n?o for igual, avan?a para o pr?ximo elemento da lista.
         cliente = cliente->seguinte;
     }
-    // Se nï¿½o encontrar um elemento com o cï¿½digo buscado, retorna nulo.
+    // Se n?o encontrar um elemento com o c?digo buscado, retorna nulo.
     return NULL;
 
-
+    
 }
-
-=======
->>>>>>> parent of ac16e1a (dsadsa)
 void consultarSaldo(Cliente * inicio)
 {	
 	int NIFc;
@@ -112,7 +110,8 @@ void consultarSaldo(Cliente * inicio)
 }
 }
 					
-void adicionarSaldo(Cliente *inicio, int NIFc) {
+void adicionarSaldo(Cliente * inicio) {
+    int NIFc;
     FILE *arquivo;
 
     // abre o arquivo para leitura e escrita
@@ -123,18 +122,6 @@ void adicionarSaldo(Cliente *inicio, int NIFc) {
         return;
     }
 
-<<<<<<< HEAD
-    // Encontra o cliente com o NIF informado
-    Cliente* cliente = encontrar_cliente(inicio, NIFc);
-    if (cliente != NULL) {
-        // Exibe o saldo atual
-        printf("Saldo atual: %.2f\n", cliente->saldo_cliente);
-
-        // Solicita ao usuÃ¡rio o valor a ser adicionado
-        float novoSaldo;
-        printf("Insira quanto saldo quer inserir : ");
-        scanf("%f", &novoSaldo);
-=======
     // procura o cliente com o NIF informado no arquivo
     printf("Insira o seu NIF : ");
     scanf("%d", &NIFc);
@@ -144,7 +131,7 @@ void adicionarSaldo(Cliente *inicio, int NIFc) {
         char *token = strtok(linha, ";");
         if (atoi(token) == NIFc) {
             encontrado = 1;
-            // lê o saldo atual e atualiza no arquivo
+            // l? o saldo atual e atualiza no arquivo
             token = strtok(NULL, ";"); //ignora NIF
             token = strtok(NULL, ";"); // ignora  senha
             token = strtok(NULL, ";"); // ignora  nome
@@ -153,38 +140,29 @@ void adicionarSaldo(Cliente *inicio, int NIFc) {
             float saldoc = atof(token);
             printf("Saldo atual: %.2f\n", saldoc);
 
-            // pede ao usuário o valor a ser adicionado
+            // pede ao usu?rio o valor a ser adicionado
             float novoSaldo;
             printf("Insira quanto saldo quer inserir : ");
             scanf("%f", &novoSaldo);
->>>>>>> parent of ac16e1a (dsadsa)
 
-        // Atualiza o saldo do cliente
-        cliente->saldo_cliente += novoSaldo;
-
-        // Volta para o inÃ­cio do arquivo
-        rewind(arquivo);
-
-        // Atualiza o valor do saldo no arquivo
-        char linha[100];
-        while (fgets(linha, 100, arquivo) != NULL) {
-            char *token = strtok(linha, ";");
-            if (atoi(token) == NIFc) {
-                fseek(arquivo, -strlen(token) - 1, SEEK_CUR);
-                fprintf(arquivo, "%d;%s;%s;%s;%s;%.2f\n", cliente->NIF_cliente, cliente->password_cliente,
-                        cliente->nome_cliente, cliente->morada_cliente, cliente->email_cliente, cliente->saldo_cliente);
-                break;
-            }
+            // atualiza o saldo no arquivo
+            saldoc += novoSaldo;
+            fseek(arquivo, -strlen(token) - 1, SEEK_CUR);
+            fprintf(arquivo, "%.2f", saldoc);
+            printf("Saldo atualizado com sucesso\n");
+            break;
         }
+    }
 
-        printf("Saldo atualizado com sucesso\n");
-    } else {
+    // verifica se o cliente foi encontrado
+    if (!encontrado) {
         printf("Cliente nao encontrado.\n");
     }
 
+
     // fecha o arquivo
     fclose(arquivo);
-}
+} 
 
 void alterarDados(Cliente *inicio) {
     int NIFc;
@@ -266,9 +244,48 @@ void alterarDados(Cliente *inicio) {
     fclose(arquivo);
 }
 
+Cliente* lerClientes()
+{FILE* fp;
+ int NIFc;
+ char passc[50],nomec[50], moradac[50], emailc[50];
+ float saldoc;
+ Cliente* aux=NULL;
+ fp = fopen("dadosClientes.txt","r");
+ if (fp!=NULL)
+ {while (!feof(fp))
+  { fscanf(fp,"%d;%s;%s;%s;%s;%f\n", &NIFc, &passc, &nomec, &moradac, &emailc, &saldoc);
+    aux = inserirCliente(aux, NIFc, passc, nomec, moradac, emailc, saldoc);
+  }
+  fclose(fp);
+ }
+ return(aux);
+}
 
-
-
-
-
+float alugarMeio(Meio* inicio, int codigo) {
+	float saldoc;
+    // procura pelo meio com o código especificado
+    Meio* meio = encontrar_meio(inicio, codigo);
+    
+    // se o meio não foi encontrado, imprime uma mensagem de erro e retorna
+    if (meio == NULL) {
+        printf("Meio de mobilidade eletrica nao encontrado.\n");
+        return 0.0;
+    }
+    
+    // se o meio já estiver alugado, imprime uma mensagem de erro e retorna
+    if (meio->disponivel == 0) {
+        printf("Meio de mobilidade eletrica indisponivel.\n");
+        return 0.0;
+    }
+    
+    // marca o meio como indisponível
+    printf("Meio alugado com sucesso\n");
+    meio->disponivel = 0;
+    
+    // reduz o saldo pelo preço do meio
+    saldoc -= meio->preco;
+    
+    // retorna o preço do meio
+    return meio->preco;
+}
 

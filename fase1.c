@@ -67,7 +67,7 @@ void login_cliente() {
             printf("2 - Adicionar saldo\n");
             printf("3 - Consultar saldo\n");
             printf("4 - Ver meios disponiveis\n");
-            printf("5 - Aluguer um meio\n");
+            printf("5 - Alugar um meio\n");
             printf("6 - Devolver meio\n");
             printf("0 - Sair\n");
             
@@ -102,7 +102,7 @@ void login_cliente() {
 						listarMeios(meios);
 						break;
 					case 5:
-					    printf("Digite o c�digo do meio de mobilidade eletrica que deseja alugar: ");
+					    printf("Insira o codigo do meio de mobilidade eletrica que deseja alugar: ");
                     	scanf("%d", &codigo);
                        	alugarMeio(meios, codigo);break;
 					case 6:
