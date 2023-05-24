@@ -262,30 +262,68 @@ Cliente* lerClientes()
 }
 
 float alugarMeio(Meio* inicio, int codigo) {
-	float saldoc;
-    // procura pelo meio com o código especificado
-    Meio* meio = encontrar_meio(inicio, codigo);
-    
-    // se o meio não foi encontrado, imprime uma mensagem de erro e retorna
-    if (meio == NULL) {
-        printf("Meio de mobilidade eletrica nao encontrado.\n");
+    Cliente* clientes = NULL;
+    int NIFc;
+    float saldoc;
+    FILE* arquivo;
+
+    arquivo = fopen("dadosClientes.txt", "r+");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.");
         return 0.0;
     }
-    
-    // se o meio já estiver alugado, imprime uma mensagem de erro e retorna
-    if (meio->disponivel == 0) {
-        printf("Meio de mobilidade eletrica indisponivel.\n");
-        return 0.0;
+
+    printf("Insira o seu NIF: ");
+    scanf("%d", &NIFc);
+    int encontrado = 0;
+    char linha[100];
+    while (fgets(linha, 100, arquivo) != NULL) {
+        char* token = strtok(linha, ";");
+        if (atoi(token) == NIFc) {
+            encontrado = 1;
+            token = strtok(NULL, ";"); // ignore NIF
+            token = strtok(NULL, ";"); // ignore senha
+            token = strtok(NULL, ";"); // ignore nome
+            token = strtok(NULL, ";"); // ignore morada
+            token = strtok(NULL, ";"); // ignore email
+            float saldoc = atof(token);
+
+            Meio* meio = encontrar_meio(inicio, codigo);
+
+            if (meio == NULL) {
+                printf("Meio de mobilidade eletrica nao encontrado.\n");
+                fclose(arquivo);
+                return 0.0;
+            }
+
+            if (meio->disponivel == 0) {
+                printf("Meio de mobilidade eletrica indisponivel.\n");
+                fclose(arquivo);
+                return 0.0;
+            }
+
+            if (saldoc < meio->preco) {
+                printf("Saldo insuficiente para alugar o meio de mobilidade eletrica.\n");
+                fclose(arquivo);
+                return 0.0;
+            }
+
+            printf("Meio alugado com sucesso.\n");
+            meio->disponivel = 0;
+            saldoc -= meio->preco;
+
+            fseek(arquivo, -strlen(token) - 1, SEEK_CUR);
+            fprintf(arquivo, "%.2f", saldoc);
+            fclose(arquivo);
+            return meio->preco;
+        }
     }
-    
-    // marca o meio como indisponível
-    printf("Meio alugado com sucesso\n");
-    meio->disponivel = 0;
-    
-    // reduz o saldo pelo preço do meio
-    saldoc -= meio->preco;
-    
-    // retorna o preço do meio
-    return meio->preco;
+
+    if (!encontrado) {
+        printf("Cliente nao encontrado.\n");
+    }
+
+    fclose(arquivo);
+    return 0.0;
 }
 
