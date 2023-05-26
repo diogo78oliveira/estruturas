@@ -8,11 +8,12 @@
 	 float preco;
 	 int disponivel;
 	 char geocodigo[3][30];
+	 char localizacao[50];
 	 struct registo* seguinte;
 	} Meio;
 
 
-	Meio* inserirMeio(Meio* inicio, int cod, float bat, float aut, char tipo[], float prec, char geo[][30]); // Inserção de um novo registo
+	Meio* inserirMeio(Meio* inicio, int cod, float bat, float aut, char tipo[], float prec, char geo[][30], char localizacao[50]); // Inserção de um novo registo
 	void listarMeios(Meio* inicio); // listar na consola o conteúdo da lista ligada
 	int existeMeio(Meio* inicio, int codigo); // Determinar existência do 'codigo' na lista ligada 'inicio'
 	Meio* removerMeio(Meio* inicio, int cod); // Remover um meio a partir do seu código
