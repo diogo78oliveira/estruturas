@@ -30,27 +30,11 @@ Cliente* inserirCliente(Cliente * inicio, int NIFc, char passc[], char nomec[],c
     }
 }
 
-Cliente* inserirLocCliente(Cliente * inicio, int NIFc, char locCliente[50])
-
-{
- if (!existeCliente(inicio, NIFc)) //verifica se existe um meio com esse c�digo
- 
- {Cliente * novo = malloc(sizeof(struct registoClientes));
-  
-  if (novo != NULL)
-  {novo->NIF_cliente = NIFc;				//copiar strings para o novo meio
-   strcpy(novo->localizacaoC,locCliente);
-   novo->seguinte = inicio;
-   return(novo); //retorna o novo meio
-  }
- } else return(inicio);
-}
-
-
 // listar na consola o conte?do da lista ligada
 void listarClientes(Cliente * inicio)
 {while (inicio != NULL)
- {printf("%d %s\n",inicio->NIF_cliente,inicio->localizacaoC);
+ {printf("%d %s %s %s %.2f\n",inicio->NIF_cliente,inicio->nome_cliente, 
+		             inicio->morada_cliente, inicio->email_cliente, inicio->saldo_cliente);
   inicio = inicio->seguinte;
  }
 }
@@ -263,34 +247,18 @@ void alterarDados(Cliente *inicio) {
 Cliente* lerClientes()
 {FILE* fp;
  int NIFc;
- char locC[50];
+ char passc[50],nomec[50], moradac[50], emailc[50];
+ float saldoc;
  Cliente* aux=NULL;
- fp = fopen("ClientesLoc.txt","r");
+ fp = fopen("dadosClientes.txt","r");
  if (fp!=NULL)
  {while (!feof(fp))
-  { fscanf(fp,"%d;%s\n", &NIFc, &locC);
-    aux = inserirLocCliente(aux, NIFc, locC);
+  { fscanf(fp,"%d;%s;%s;%s;%s;%f\n", &NIFc, &passc, &nomec, &moradac, &emailc, &saldoc);
+    aux = inserirCliente(aux, NIFc, passc, nomec, moradac, emailc, saldoc);
   }
   fclose(fp);
  }
  return(aux);
-}
-
-int guardarClientes(Cliente* inicio)
-{FILE* fp;
- fp = fopen("ClientesLoc.txt","w");
- if (fp!=NULL)
- {
- Cliente* aux= inicio;
- while (aux != NULL)
- {
-  fprintf(fp,"%d;%s\n", aux->NIF_cliente, aux->localizacaoC);
-  aux = aux->seguinte;
- }
- fclose(fp);
- return(1);
- }
- else return(0);
 }
 
 float alugarMeio(Meio* inicio, int codigo) {
