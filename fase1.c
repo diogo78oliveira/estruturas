@@ -178,7 +178,7 @@ void login_gestor(){
 			 char moradag[50];
 			 char passg[50];
 			 char geo[3][30];
-             char locM;
+             char locM[50];
              
             do {
                 printf("Escolha uma opcao: ");
@@ -204,7 +204,7 @@ void login_gestor(){
                         printf("terceiro nome do geocodigo\n");
                         scanf("%s",&geo[2]);
                         printf("Insira a localizacao\n");
-                        scanf("%s",&locM[50]);
+                        scanf("%s",&locM);
 
            				meios = inserirMeio(meios,cod,bat,aut,tipo,prec,geo,locM);
                         break;

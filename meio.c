@@ -10,7 +10,7 @@ int guardarMeios(Meio* inicio)
  Meio* aux= inicio;
  while (aux != NULL)
  {
-  fprintf(fp,"%d;%f;%f;%s;%f;%s\n", aux->codigo, aux->bateria, 
+  fprintf(fp,"%d;%f;%f;%s;%f;%s;%s\n", aux->codigo, aux->bateria, 
 	                      aux->autonomia, aux->tipo, aux->preco, aux->geocodigo, aux->localizacao);
   aux = aux->seguinte;
  }
@@ -56,8 +56,8 @@ Meio* inserirMeio(Meio * inicio, int cod, float bat, float aut, char tipo[], flo
    strcpy(novo->geocodigo[0],geo[0]);
    strcpy(novo->geocodigo[1],geo[1]);
    strcpy(novo->geocodigo[2],geo[2]);
-   novo->seguinte = inicio;
    strcpy(novo->localizacao,locM);
+   novo->seguinte = inicio;
    return(novo); //retorna o novo meio
   }
  } else return(inicio);
@@ -66,7 +66,7 @@ Meio* inserirMeio(Meio * inicio, int cod, float bat, float aut, char tipo[], flo
 // listar na consola o conte?do da lista ligada
 void listarMeios(Meio * inicio)
 {while (inicio != NULL)
- {printf("%d %.2f %.2f %s %.2f %s %s\n",inicio->codigo,  inicio->bateria, 
+ {printf("%d %.2f %.2f %s %.2f %s %s \n",inicio->codigo,  inicio->bateria, 
  								inicio->autonomia, inicio->tipo, inicio->preco, inicio->geocodigo, inicio->localizacao);
   inicio = inicio->seguinte;
  }
@@ -187,7 +187,7 @@ void listar_meios_por_geocodigo(Meio* inicio) {
     int encontrou = 0;
     char geocodigo[3][30]; 
     Meio* meio_atual = inicio;
-
+	
     
     printf("Primeiro nome do geocodigo\n");
     scanf("%s",&geocodigo[0]);

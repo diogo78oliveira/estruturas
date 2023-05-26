@@ -3,7 +3,7 @@
 #include "clientes.h"
 #include "meio.h"
 // Inser??o de um novo registo
-Cliente* inserirCliente(Cliente * inicio, int NIFc, char passc[], char nomec[],char moradac[], char emailc[], float saldoc, char locC){
+Cliente* inserirCliente(Cliente * inicio, int NIFc, char passc[], char nomec[],char moradac[], char emailc[], float saldoc){
  if (!existeCliente(inicio, NIFc)) {
         Cliente* novo = malloc(sizeof(struct registoClientes));
         if (novo != NULL) {
@@ -39,7 +39,6 @@ Cliente* inserirLocCliente(Cliente * inicio, int NIFc, char locCliente[50])
   
   if (novo != NULL)
   {novo->NIF_cliente = NIFc;				//copiar strings para o novo meio
-   strcpy(novo->localizacaoC,locCliente);
    novo->seguinte = inicio;
    return(novo); //retorna o novo meio
   }
@@ -50,7 +49,7 @@ Cliente* inserirLocCliente(Cliente * inicio, int NIFc, char locCliente[50])
 // listar na consola o conte?do da lista ligada
 void listarClientes(Cliente * inicio)
 {while (inicio != NULL)
- {printf("%d %s\n",inicio->NIF_cliente,inicio->localizacaoC);
+ {printf("%d %s\n",inicio->NIF_cliente);
   inicio = inicio->seguinte;
  }
 }
@@ -284,7 +283,7 @@ int guardarClientes(Cliente* inicio)
  Cliente* aux= inicio;
  while (aux != NULL)
  {
-  fprintf(fp,"%d;%s\n", aux->NIF_cliente, aux->localizacaoC);
+  fprintf(fp,"%d;%s\n", aux->NIF_cliente);
   aux = aux->seguinte;
  }
  fclose(fp);
