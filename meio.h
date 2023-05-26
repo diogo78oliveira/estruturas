@@ -1,7 +1,7 @@
 	#include <stdio.h>
 	
 	typedef struct registo
-	{int codigo; // código do meio de mobilidade elétrica
+	{int codigo; // cï¿½digo do meio de mobilidade elï¿½trica
 	 char tipo[50];
 	 float bateria;
 	 float autonomia;
@@ -13,10 +13,10 @@
 	} Meio;
 
 
-	Meio* inserirMeio(Meio* inicio, int cod, float bat, float aut, char tipo[], float prec, char geo[][30], char localizacao[50]); // Inserção de um novo registo
-	void listarMeios(Meio* inicio); // listar na consola o conteúdo da lista ligada
-	int existeMeio(Meio* inicio, int codigo); // Determinar existência do 'codigo' na lista ligada 'inicio'
-	Meio* removerMeio(Meio* inicio, int cod); // Remover um meio a partir do seu código
+	Meio* inserirMeio(Meio* inicio, int cod, float bat, float aut, char tipo[], float prec, char geo[][30], char locMeio[50]); // Inserï¿½ï¿½o de um novo registo
+	void listarMeios(Meio* inicio); // listar na consola o conteï¿½do da lista ligada
+	int existeMeio(Meio* inicio, int codigo); // Determinar existï¿½ncia do 'codigo' na lista ligada 'inicio'
+	Meio* removerMeio(Meio* inicio, int cod); // Remover um meio a partir do seu cï¿½digo
 
 	int guardarMeios(Meio* inicio);
 	Meio* lerMeios();

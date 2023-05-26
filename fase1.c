@@ -69,6 +69,7 @@ void login_cliente() {
             printf("4 - Ver meios disponiveis\n");
             printf("5 - Alugar um meio\n");
             printf("6 - Devolver meio\n");
+            printf("7- Inserir Localicacao\n");
             printf("0 - Sair\n");
             
             {Cliente* clientes = NULL;
@@ -82,6 +83,7 @@ void login_cliente() {
 			int cod,codigo;
 			float bat, aut;
 			char tipo[50];
+            char locCliente[50];
             do {
                 printf("Escolha uma opcao: ");
                 scanf("%d", &opcao);
@@ -106,7 +108,15 @@ void login_cliente() {
                     	scanf("%d", &codigo);
                        	alugarMeio(meios, codigo);break;
 					case 6:
-						devolverMeio(meios, codigo);break;						
+						devolverMeio(meios, codigo);break;
+                     case 7:
+                        printf("Insira o seu NIF: ");
+                        scanf("%d", &NIFc);break;
+                        printf("Insira a sua localizaçao :");
+                        scanf("%s",locCliente);break;
+						clientes = inserirLocCliente(clientes,NIFc,locCliente);
+                        guardarClientes(clientes); break;
+
                     case 0:
                         printf("Logout realizado com sucesso!\n");
                         system("cls");
@@ -178,6 +188,7 @@ void login_gestor(){
 			 char moradag[50];
 			 char passg[50];
 			 char geo[3][30];
+			 char locMeio[50];
              
             do {
                 printf("Escolha uma opcao: ");
@@ -202,7 +213,9 @@ void login_gestor(){
                         scanf("%s",&geo[1]);
                         printf("terceiro nome do geocodigo\n");
                         scanf("%s",&geo[2]);
-           				meios = inserirMeio(meios,cod,bat,aut,tipo,prec,geo);
+                        printf("Insira a localiza�ao do meio\n");
+                        scanf("%s",&locMeio);
+           				meios = inserirMeio(meios,cod,bat,aut,tipo,prec,geo,locMeio);
                         break;
                     case 2:
                        listarMeios(meios); 
