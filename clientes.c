@@ -3,22 +3,19 @@
 #include "clientes.h"
 #include "meio.h"
 // Inser??o de um novo registo
-Cliente* inserirCliente(Cliente * inicio, int NIFc, char passc[], char nomec[],char moradac[], char emailc[], float saldoc){
+Cliente* inserirCliente(Cliente * inicio, int NIFc, char passc[], float saldoc){
  if (!existeCliente(inicio, NIFc)) {
         Cliente* novo = malloc(sizeof(struct registoClientes));
         if (novo != NULL) {
         	novo->NIF_cliente= NIFc;
         	strcpy(novo->password_cliente, passc);
-        	strcpy(novo->nome_cliente, nomec);
-            strcpy(novo->morada_cliente, moradac);
-            strcpy(novo->email_cliente, emailc);
 			novo->saldo_cliente= saldoc;	
    			novo->seguinte = inicio;
 
             FILE* fp;
-            fp = fopen("dadosClientes.txt", "a");
+            fp = fopen("loginClientes.txt", "a");
             if (fp != NULL) {
-                fprintf(fp, "%d;%s;%s;%s;%s;%f\n", novo->NIF_cliente,novo->password_cliente, novo->nome_cliente, novo->morada_cliente, novo->email_cliente, novo->saldo_cliente);
+                fprintf(fp, "%d;%s;%f\n", novo->NIF_cliente,novo->password_cliente, novo->saldo_cliente);
                 fclose(fp);
             } else {
                 printf("Erro\n");
@@ -30,24 +27,9 @@ Cliente* inserirCliente(Cliente * inicio, int NIFc, char passc[], char nomec[],c
     }
 }
 
-Cliente* inserirLocCliente(Cliente * inicio, int NIFc, char locCliente[50])
-
-{
- if (!existeCliente(inicio, NIFc)) //verifica se existe um meio com esse c�digo
- 
- {Cliente * novo = malloc(sizeof(struct registoClientes));
-  
-  if (novo != NULL)
-  {novo->NIF_cliente = NIFc;				//copiar strings para o novo meio
-   novo->seguinte = inicio;
-   return(novo); //retorna o novo meio
-  }
- } else return(inicio);
-}
-
 
 // listar na consola o conte?do da lista ligada
-void listarClientes(Cliente * inicio)
+/*void listarClientes(Cliente * inicio)
 {while (inicio != NULL)
  {printf("%d %s\n",inicio->NIF_cliente);
   inicio = inicio->seguinte;
@@ -62,7 +44,7 @@ int existeCliente(Cliente* inicio, int NIFc)
   }
  return(0);
 }
-
+*/
 
 
 Cliente* encontrar_cliente(Cliente* inicio, int NIFc) {
@@ -89,7 +71,7 @@ void consultarSaldo(Cliente * inicio)
     FILE *arquivo;
 
     // abre o arquivo para leitura e escrita
-    arquivo = fopen("dadosClientes.txt", "r+");
+    arquivo = fopen("loginClientes.txt", "r+");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.");
@@ -108,9 +90,9 @@ void consultarSaldo(Cliente * inicio)
             
             token = strtok(NULL, ";"); //ignora NIF
             token = strtok(NULL, ";"); // ignora  senha
-            token = strtok(NULL, ";"); // ignora  nome
-            token = strtok(NULL, ";"); // ignora  morada
-            token = strtok(NULL, ";"); // ignora email
+            //token = strtok(NULL, ";"); // ignora  nome
+            //token = strtok(NULL, ";"); // ignora  morada
+            //token = strtok(NULL, ";"); // ignora email
             float saldoc = atof(token);
             printf("Saldo atual: %.2f\n", saldoc);	
             // verifica se o cliente foi encontrado
@@ -130,7 +112,7 @@ void adicionarSaldo(Cliente * inicio) {
     FILE *arquivo;
 
     // abre o arquivo para leitura e escrita
-    arquivo = fopen("dadosClientes.txt", "r+");
+    arquivo = fopen("loginClientes.txt", "r+");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.");
@@ -149,9 +131,9 @@ void adicionarSaldo(Cliente * inicio) {
             // l? o saldo atual e atualiza no arquivo
             token = strtok(NULL, ";"); //ignora NIF
             token = strtok(NULL, ";"); // ignora  senha
-            token = strtok(NULL, ";"); // ignora  nome
-            token = strtok(NULL, ";"); // ignora  morada
-            token = strtok(NULL, ";"); // ignora email
+            //token = strtok(NULL, ";"); // ignora  nome
+            //token = strtok(NULL, ";"); // ignora  morada
+            //token = strtok(NULL, ";"); // ignora email
             float saldoc = atof(token);
             printf("Saldo atual: %.2f\n", saldoc);
 
@@ -179,14 +161,14 @@ void adicionarSaldo(Cliente * inicio) {
     fclose(arquivo);
 } 
 
-void alterarDados(Cliente *inicio) {
+/*void alterarDados(Cliente *inicio) {
     int NIFc;
     char passc[50], nomec[50], moradac[50], emailc[50];
     float saldoc;
     FILE *arquivo;
 
     // abre o arquivo para leitura e escrita
-    arquivo = fopen("dadosClientes.txt", "r+");
+    arquivo = fopen("loginClientes.txt", "r+");
 
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.");
@@ -259,6 +241,8 @@ void alterarDados(Cliente *inicio) {
     fclose(arquivo);
 }
 
+
+/*
 Cliente* lerClientes()
 {FILE* fp;
  int NIFc;
@@ -291,6 +275,7 @@ int guardarClientes(Cliente* inicio)
  }
  else return(0);
 }
+*/
 
 float alugarMeio(Meio* inicio, int codigo) {
     Cliente* clientes = NULL;
@@ -298,7 +283,7 @@ float alugarMeio(Meio* inicio, int codigo) {
     float saldoc;
     FILE* arquivo;
 
-    arquivo = fopen("dadosClientes.txt", "r+");
+    arquivo = fopen("loginClientes.txt", "r+");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo.");
         return 0.0;
@@ -314,9 +299,9 @@ float alugarMeio(Meio* inicio, int codigo) {
             encontrado = 1;
             token = strtok(NULL, ";"); // ignore NIF
             token = strtok(NULL, ";"); // ignore senha
-            token = strtok(NULL, ";"); // ignore nome
-            token = strtok(NULL, ";"); // ignore morada
-            token = strtok(NULL, ";"); // ignore email
+            //token = strtok(NULL, ";"); // ignore nome
+            //token = strtok(NULL, ";"); // ignore morada
+            //token = strtok(NULL, ";"); // ignore email
             float saldoc = atof(token);
 
             Meio* meio = encontrar_meio(inicio, codigo);
@@ -356,5 +341,13 @@ float alugarMeio(Meio* inicio, int codigo) {
 
     fclose(arquivo);
     return 0.0;
+}
+
+int existeCliente(Cliente* inicio, int NIFc)
+{while(inicio!=NULL)
+  {if (inicio->NIF_cliente == NIFc) return(1);
+   inicio = inicio->seguinte;
+  }
+ return(0);
 }
 

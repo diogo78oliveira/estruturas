@@ -4,6 +4,7 @@
 #include "gestores.h"
 #include <stdlib.h>
 #include <string.h>
+#include "clientesDados.h"
 
 #define MAX_USERNAME_LEN 20
 #define MAX_PASSWORD_LEN 20
@@ -18,23 +19,24 @@ void registar_cliente() {
 	{Cliente* clientes = NULL;
 			 int NIFc;
 			 char passc[50];
-			 char nomec[50];
-			 char moradac[50];
-			 char emailc[50];
+			 //char nomec[50];
+			 //char moradac[50];
+			 //char emailc[50];
 			 float saldoc;
 			printf("NIF?\n");
             scanf("%d",&NIFc);
             scanf("%c");
             printf("Password?\n");
             scanf("%s",&passc);
-            printf("Nome?\n");
+            /*printf("Nome?\n");
 	   		scanf("%s",&nomec);
 	   		printf("Morada?\n");
 	   		scanf("%s",&moradac);
 	   		printf("Email?\n");
 	   		scanf("%s",&emailc);
-           	clientes = inserirCliente(clientes,NIFc,passc,nomec,moradac,emailc,saldoc);
-           	printf("Cliente Registado com sucesso");
+	   		*/
+           	clientes = inserirCliente(clientes,NIFc,passc,saldoc);
+           	printf("Cliente Registado com sucesso\n");
            	
            }
        }
@@ -48,9 +50,9 @@ void login_cliente() {
     scanf("%s", passc);
 
     FILE* arquivo;
-    arquivo = fopen("dadosClientes.txt", "r");
+    arquivo = fopen("loginClientes.txt", "r");
     if (arquivo == NULL) {
-        printf("Erro ao abrir arquivo de gestores!\n");
+        printf("Erro ao abrir arquivo de Clientes!\n");
     }
     char linha[MAX_LINHA_LEN];
     while (fgets(linha, MAX_LINHA_LEN, arquivo) != NULL) {
@@ -63,49 +65,81 @@ void login_cliente() {
             printf("Login realizado com sucesso!\n");
             system("cls");
             printf("========== MENU DO CLIENTE ==========\n");
-            printf("1 - Alterar Dados\n");
-            printf("2 - Adicionar saldo\n");
-            printf("3 - Consultar saldo\n");
-            printf("4 - Ver meios disponiveis\n");
-            printf("5 - Alugar um meio\n");
-            printf("6 - Devolver meio\n");
+            printf("1 - Inserir Dados\n");
+            printf("2 - Ler Dados\n");
+            printf("3 - Guardar Dados\n");
+            printf("4 - Alterar Dados\n");
+            printf("5 - Ver Dados\n");
+            printf("6 - Adicionar saldo\n");
+            printf("7 - Consultar saldo\n");
+            printf("8 - Ver meios disponiveis\n");
+            printf("9 - Alugar um meio\n");
+            printf("10 - Devolver meio\n");
             printf("0 - Sair\n");
             
             {Cliente* clientes = NULL;
-            Cliente * inicio = NULL;
+            dadosCliente* dadosclientes = NULL;
+            dadosCliente* inicio = NULL;
+            //Cliente* inicio=NULL;
             Meio* meios = NULL;
             int opcao,NIFc;
             int saldoc;
             char nomec[50];
+            char passc[50];
 			char moradac[50];
 			char emailc[50];
+			char locC[50];
+	
 			int cod,codigo;
 			float bat, aut;
 			char tipo[50];
+			char locM[50];
             do {
                 printf("Escolha uma opcao: ");
                 scanf("%d", &opcao);
 
                 switch (opcao) {
-                    case 1:
-                    	system("cls");
-                        alterarDados(clientes);
+                	case 1:
+                    	printf("NIF?\n");
+                        scanf("%d",&NIFc);
+                        scanf("%c");
+	   					printf("Password?\n");
+	   					scanf("%s",&passc);
+	   					printf("Nome\n");
+	   					scanf("%s",&nomec);
+	   					printf("Morada?\n");											
+	   					scanf("%s",&moradac);
+	   					printf("Email\n");
+	   					scanf("%s",&emailc);
+	   					printf("Localizacao?\n");
+	   					scanf("%s",&locC);
+           				dadosclientes = inserirdadosCliente(dadosclientes,NIFc,passc,nomec,moradac,emailc,locC);
                         break;
                     case 2:
+                    	dadosclientes = lerdadosClientes(); break;
+					case 3:
+                    	 guardardadosClientes(dadosclientes); break;  
+                    case 4:
+                        alterarDados(dadosclientes);
+                        break;
+                    case 5:
+                        verdadosCliente(dadosclientes);
+                        break;    
+                    case 6:
                         adicionarSaldo(clientes);
                         break;
-                    case 3:
+                    case 7:
                         consultarSaldo(clientes);
 						break;            
-					case 4:
+					case 8:
 						meios = lerMeios();
 						listarMeios(meios);
 						break;
-					case 5:
+					case 9:
 					    printf("Insira o codigo do meio de mobilidade eletrica que deseja alugar: ");
                     	scanf("%d", &codigo);
                        	alugarMeio(meios, codigo);break;
-					case 6:
+					case 10:
 						devolverMeio(meios, codigo);break;						
                     case 0:
                         printf("Logout realizado com sucesso!\n");
@@ -157,7 +191,7 @@ void login_gestor(){
         	printf("4 - Guardar Meios\n");
         	printf("5 - Ler Meios\n");
         	printf("6 - Listar Meios por ordem de autonomia decrescente\n");
-        	printf("7 - Listar Meios por Geoc�digo\n");
+        	printf("7 - Listar Meios por Geocodigo\n");
         	printf("=====================================\n");
         	printf("8 - Inserir novo Gestor\n");
         	printf("9 - Listar Gestores\n");
@@ -195,7 +229,7 @@ void login_gestor(){
 	   					scanf("%f",&aut);
 	   					printf("Tipo?\n");
 	   					scanf("%s",&tipo);
-	   					printf("Insira o pre�o do meio\n");
+	   					printf("Insira o preco do meio\n");
 	   					scanf("%f",&prec);
 	   					printf("Primeiro nome do geocodigo\n");
                         scanf("%s",&geo[0]);
