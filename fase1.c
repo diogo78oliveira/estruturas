@@ -88,12 +88,12 @@ void login_cliente() {
             char passc[50];
 			char moradac[50];
 			char emailc[50];
-			char locC[50];
+			int locC;
 	
 			int cod,codigo;
 			float bat, aut;
-			char tipo[50];
-			char locM[50];
+			char tipo[50], localizacaoCliente[50];
+			int locM;
             do {
                 printf("Escolha uma opcao: ");
                 scanf("%d", &opcao);
@@ -112,9 +112,11 @@ void login_cliente() {
 	   					printf("Email\n");
 	   					scanf("%s",&emailc);
 	   					printf("Localizacao?\n");
-	   					scanf("%s",&locC);
-           				dadosclientes = inserirdadosCliente(dadosclientes,NIFc,passc,nomec,moradac,emailc,locC);
-                        break;
+			            scanf("%s", localizacaoCliente);
+			            int locC = converterLocalizacao(localizacaoCliente);
+			            dadosclientes = inserirdadosCliente(dadosclientes, NIFc, passc, nomec, moradac, emailc, locC);
+			            break;
+                        
                     case 2:
                     	dadosclientes = lerdadosClientes(); break;
 					case 3:
@@ -185,6 +187,8 @@ void login_gestor(){
             printf("Login realizado com sucesso!\n");
             system("cls");
             printf("======= MENU GESTORES =======\n");
+            printf("=====================================\n");
+            printf("=======    MEIOS  ===============\n");
         	printf("1 - Inserir Meio\n");
         	printf("2 - Listar Meios\n");
         	printf("3 - Remover Meio\n");
@@ -193,12 +197,22 @@ void login_gestor(){
         	printf("6 - Listar Meios por ordem de autonomia decrescente\n");
         	printf("7 - Listar Meios por Geocodigo\n");
         	printf("=====================================\n");
+        	printf("=======    Gestores  ===============\n");
         	printf("8 - Inserir novo Gestor\n");
         	printf("9 - Listar Gestores\n");
         	printf("10 - Remover um gestor\n");  
 			printf("11 - Alterar dados\n");
 			printf("12 - Guardar\n");
             printf("13 - Ler gestores\n");
+            printf("=====================================\n");
+            printf("=======    Clientes  ===============\n");
+            printf("14 - Ler clientes\n");
+            printf("15 - Listar Clientes\n");
+            printf("=====================================\n");
+            printf("=======    Grafos  ===============\n");
+            printf("16 - Iniciar grafo\n");
+            printf("17 - Ver grafo\n");
+            printf("18 - libertar grafo\n");
         	printf("0 - Sair\n");
         	
              {Meio* meios = NULL;
@@ -212,8 +226,28 @@ void login_gestor(){
 			 char moradag[50];
 			 char passg[50];
 			 char geo[3][30];
-             char locM[50];
-             
+			 char localizacaoMeio[50];
+             int locM;
+             dadosCliente* dadosclientes = NULL;
+            dadosCliente* inicio = NULL;
+            int NIFc;
+            char passc;
+            char nomec;
+            char moradac;
+            char emailc;
+            char locC;
+            Grafo* grafo = NULL;
+            
+            /*No* nos = NULL;
+            Aresta* arestas = NULL;
+            Grafo* grafos = NULL;
+            char nome[50];
+            int peso;
+            const char* localizacao;
+            */
+            
+            
+   
             do {
                 printf("Escolha uma opcao: ");
                 scanf("%d", &opcao);
@@ -237,9 +271,9 @@ void login_gestor(){
                         scanf("%s",&geo[1]);
                         printf("terceiro nome do geocodigo\n");
                         scanf("%s",&geo[2]);
-                        printf("Insira a localizacao\n");
-                        scanf("%s",&locM);
-
+                        printf("Localizacao?\n");
+			            scanf("%s", localizacaoMeio);
+			            int locM = converterLocalizacaoMeio(localizacaoMeio);
            				meios = inserirMeio(meios,cod,bat,aut,tipo,prec,geo,locM);
                         break;
                     case 2:
@@ -285,7 +319,38 @@ void login_gestor(){
 					case 12:
 						guardarGestores(gestores); break;
 					case 13:
-						gestores = lerGestores(); break;				   		   	
+						gestores = lerGestores(); break;
+					case 14:
+						dadosclientes = lerdadosClientes(); break;
+					case 15:
+						listardadosClientes(dadosclientes);
+						break;
+						
+					case 16:	
+						Grafo grafo = lerMeios();
+					    // Adicionar arestas entre os meios
+					    adicionarAresta(&grafo, 1, 2);
+					    adicionarAresta(&grafo, 2, 3);
+					    adicionarAresta(&grafo, 3, 4);
+					    adicionarAresta(&grafo, 4, 1);
+					
+					    // Calcular distância entre um meio e um cliente
+					    int codigoMeio = 2;
+					    int codigoCliente = 1;
+					    int distancia = calcularDistancia(&grafo, codigoMeio, codigoCliente);
+					    if (distancia != -1) {
+					        printf("A distância entre o meio %d e o cliente %d é %d.\n", codigoMeio, codigoCliente, distancia);
+					    } else {
+					        printf("Meio ou cliente não encontrado.\n");
+					    }
+					
+					    return 0;
+}
+						 break;
+					case 17:
+							imprimirGrafo(grafos);break;	
+					case 18:
+							liberarGrafo(grafos);break;				
                     case 0:
                         printf("Logout realizado com sucesso!\n");
                         system("cls");
@@ -303,7 +368,7 @@ void login_gestor(){
         }
     }
 
-    printf("Usuï¿½rio ou senha invï¿½lidos!\n");
+    printf("Codigo ou pass invalidos!\n");
     fclose(arquivo);
 }
 

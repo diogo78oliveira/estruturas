@@ -1,16 +1,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include "meio.h"
+#include <time.h>
 
 int guardarMeios(Meio* inicio)
 {FILE* fp;
- fp = fopen("meios.txt","w");
+ fp = fopen("meios.txt","a");
  if (fp!=NULL)
  {
  Meio* aux= inicio;
  while (aux != NULL)
  {
-  fprintf(fp,"%d;%f;%f;%s;%f;%s;%s\n", aux->codigo, aux->bateria, 
+  fprintf(fp,"%d;%f;%f;%s;%f;%s;%d\n", aux->codigo, aux->bateria, 
 	                      aux->autonomia, aux->tipo, aux->preco, aux->geocodigo, aux->localizacao);
   aux = aux->seguinte;
  }
@@ -20,18 +21,26 @@ int guardarMeios(Meio* inicio)
  else return(0);
 }
 
+
+int converterLocalizacaoMeio(char localizacaoMeio[]) {
+    // Mapear o texto da localização para um número aleatório entre 1 e 100
+    srand(time(NULL));  // Inicializar a semente para geração de números aleatórios
+    int numLocalizacao = (rand() % 100) + 1;
+    return numLocalizacao;
+}
+
 Meio* lerMeios()
 {FILE* fp;
  int cod;
  float bat, aut, prec;
  char tipo[50];
  char geo[3][30];
- char locM[50];
+ int locM;
  Meio* aux=NULL;
  fp = fopen("meios.txt","r");
  if (fp!=NULL)
  {while (!feof(fp))
-  { fscanf(fp,"%d;%f;%f;%s;%f;%s;%s\n", &cod, &bat, &aut, &tipo, &prec, &geo, &locM);
+  { fscanf(fp,"%d;%f;%f;%s;%f;%s;%d\n", &cod, &bat, &aut, &tipo, &prec, &geo, &locM);
     aux = inserirMeio(aux, cod, bat, aut, tipo, prec, geo, locM);
   }
   fclose(fp);
@@ -40,7 +49,7 @@ Meio* lerMeios()
 }
 
 // Inser??o de um novo registo
-Meio* inserirMeio(Meio * inicio, int cod, float bat, float aut, char tipo[], float prec, char geo[][30], char locM[50])
+Meio* inserirMeio(Meio * inicio, int cod, float bat, float aut, char tipo[], float prec, char geo[][30], int locM)
 
 {
  if (!existeMeio(inicio, cod)) //verifica se existe um meio com esse cï¿½digo
@@ -56,7 +65,7 @@ Meio* inserirMeio(Meio * inicio, int cod, float bat, float aut, char tipo[], flo
    strcpy(novo->geocodigo[0],geo[0]);
    strcpy(novo->geocodigo[1],geo[1]);
    strcpy(novo->geocodigo[2],geo[2]);
-   strcpy(novo->localizacao,locM);
+   novo->localizacao = locM;
    novo->seguinte = inicio;
    return(novo); //retorna o novo meio
   }
@@ -66,7 +75,7 @@ Meio* inserirMeio(Meio * inicio, int cod, float bat, float aut, char tipo[], flo
 // listar na consola o conte?do da lista ligada
 void listarMeios(Meio * inicio)
 {while (inicio != NULL)
- {printf("%d %.2f %.2f %s %.2f %s %s \n",inicio->codigo,  inicio->bateria, 
+ {printf("%d %.2f %.2f %s %.2f %s %d \n",inicio->codigo,  inicio->bateria, 
  								inicio->autonomia, inicio->tipo, inicio->preco, inicio->geocodigo, inicio->localizacao);
   inicio = inicio->seguinte;
  }
